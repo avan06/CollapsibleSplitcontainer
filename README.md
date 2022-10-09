@@ -55,3 +55,6 @@ ___
 - MinSize: MinSize: the panel collapses to the specified MinSize
 - Collapsed: One-sided panel completely collapsed
 
+## SingleImageCollapsePanel2
+
+- Determines whether to collapse Panel2 when SplitterButtonStyle is SingleImage, otherwise Panel1 collapse

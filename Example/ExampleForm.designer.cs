@@ -35,6 +35,7 @@
             this.styleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.singleImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +50,8 @@
             this.orientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter = new SoftGee.CollapsibleSplitContainer();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.singleImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
@@ -102,16 +102,23 @@
             // noneToolStripMenuItem
             // 
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.noneToolStripMenuItem.Text = "None";
             this.noneToolStripMenuItem.Click += new System.EventHandler(this.ButtonStyle_Click);
             // 
             // imageToolStripMenuItem
             // 
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
-            this.imageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.imageToolStripMenuItem.Text = "Image";
             this.imageToolStripMenuItem.Click += new System.EventHandler(this.ButtonStyle_Click);
+            // 
+            // singleImageToolStripMenuItem
+            // 
+            this.singleImageToolStripMenuItem.Name = "singleImageToolStripMenuItem";
+            this.singleImageToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.singleImageToolStripMenuItem.Text = "SingleImage";
+            this.singleImageToolStripMenuItem.Click += new System.EventHandler(this.ButtonStyle_Click);
             // 
             // locationToolStripMenuItem
             // 
@@ -223,6 +230,7 @@
             // 
             this.splitter.Panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.splitter.Panel2.Controls.Add(this.button1);
+            this.splitter.SingleImageCollapsePanel2 = false;
             this.splitter.Size = new System.Drawing.Size(434, 237);
             this.splitter.SplitterButtonBitmap = ((System.Drawing.Bitmap)(resources.GetObject("splitter.SplitterButtonBitmap")));
             this.splitter.SplitterDistance = 100;
@@ -239,17 +247,6 @@
             this.button2.Text = "Panel1";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(3, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Panel2";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // groupBox1
             // 
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -260,12 +257,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
-            // singleImageToolStripMenuItem
+            // button1
             // 
-            this.singleImageToolStripMenuItem.Name = "singleImageToolStripMenuItem";
-            this.singleImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.singleImageToolStripMenuItem.Text = "SingleImage";
-            this.singleImageToolStripMenuItem.Click += new System.EventHandler(this.ButtonStyle_Click);
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(3, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Panel2";
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // ExampleForm
             // 

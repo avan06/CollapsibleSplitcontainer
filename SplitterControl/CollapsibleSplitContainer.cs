@@ -241,6 +241,10 @@ namespace SoftGee
             }
         }
 
+        [Category("Collapsible"), Description("Determines whether to collapse Panel2 when SplitterButtonStyle is SingleImage, otherwise Panel1 collapse")]
+        [DefaultValue(true)]
+        public bool SingleImageCollapsePanel2 { get; set; } = true;
+
         // Forces designer to refresh and reflect changes to the property
         public new bool IsSplitterFixed
         {
@@ -300,7 +304,6 @@ namespace SoftGee
                     splitterDistanceOriginal = SplitterDistance;
                     SplitterDistance = Panel1MinSize;
                     panel1Minimized = true;
-                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton2.BringToFront();
                 }
             }
             Refresh();
@@ -342,7 +345,6 @@ namespace SoftGee
                     else SplitterDistance = Height - Panel2MinSize;
 
                     panel2Minimized = true;
-                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton1.BringToFront();
                 }
             }
             Refresh();
@@ -418,8 +420,16 @@ namespace SoftGee
             }
             else if (SplitterButtonStyle == ButtonStyle.SingleImage)
             {
-                if (panel2Minimized) splitterButton1.BringToFront();
-                else splitterButton2.BringToFront();
+                if (SingleImageCollapsePanel2)
+                {
+                    if (panel2Minimized) splitterButton1.BringToFront();
+                    else splitterButton2.BringToFront();
+                }
+                else
+                {
+                    if (panel1Minimized) splitterButton2.BringToFront();
+                    else splitterButton1.BringToFront();
+                }
             }
         }
 
