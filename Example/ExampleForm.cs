@@ -22,6 +22,28 @@ namespace Example
                 imageToolStripMenuItem.Checked = true;
                 ToggleChecked(imageToolStripMenuItem);
             }
+            else if (splitter.SplitterButtonStyle == ButtonStyle.SingleImage)
+            {
+                singleImageToolStripMenuItem.Checked = true;
+                ToggleChecked(singleImageToolStripMenuItem);
+            }
+
+            // Set button location menuitem check
+            if (splitter.SplitterButtonLocation == ButtonLocation.Panel)
+            {
+                panelToolStripMenuItem.Checked = true;
+                ToggleChecked(panelToolStripMenuItem);
+            }
+            else if (splitter.SplitterButtonLocation == ButtonLocation.Panel1)
+            {
+                panel1ToolStripMenuItem.Checked = true;
+                ToggleChecked(panel1ToolStripMenuItem);
+            }
+            else if (splitter.SplitterButtonLocation == ButtonLocation.Panel2)
+            {
+                panel2ToolStripMenuItem.Checked = true;
+                ToggleChecked(panel2ToolStripMenuItem);
+            }
 
             // Set button position menuitem check
             if (splitter.SplitterButtonPosition == ButtonPosition.TopLeft)
@@ -53,9 +75,9 @@ namespace Example
             }
         }
 
-        private void exit_Click(object sender, EventArgs e) => Application.Exit();
+        private void Exit_Click(object sender, EventArgs e) => Application.Exit();
 
-        private void buttonStyle_Click(object sender, EventArgs e)
+        private void ButtonStyle_Click(object sender, EventArgs e)
         {
             string val = ((ToolStripMenuItem)sender).Text;
             ButtonStyle cd = (ButtonStyle)Enum.Parse(typeof(ButtonStyle), val);
@@ -63,7 +85,15 @@ namespace Example
             ToggleChecked(sender);
         }
 
-        private void buttonPosition_Click(object sender, EventArgs e)
+        private void ButtonLocation_Click(object sender, EventArgs e)
+        {
+            string val = ((ToolStripMenuItem)sender).Text;
+            ButtonLocation cd = (ButtonLocation)Enum.Parse(typeof(ButtonLocation), val);
+            splitter.SplitterButtonLocation = cd;
+            ToggleChecked(sender);
+        }
+
+        private void ButtonPosition_Click(object sender, EventArgs e)
         {
             string val = ((ToolStripMenuItem)sender).Text;
             ButtonPosition cd = (ButtonPosition)Enum.Parse(typeof(ButtonPosition), val);
@@ -71,7 +101,7 @@ namespace Example
             ToggleChecked(sender);
         }
 
-        private void collapseDistance_Click(object sender, EventArgs e)
+        private void CollapseDistance_Click(object sender, EventArgs e)
         {
             string val = ((ToolStripMenuItem)sender).Text;
             CollapseDistance cd = (CollapseDistance)Enum.Parse(typeof(CollapseDistance), val);
@@ -79,7 +109,7 @@ namespace Example
             ToggleChecked(sender);
         }
 
-        private void orientation_Click(object sender, EventArgs e) => splitter.Orientation = splitter.Orientation == Orientation.Vertical ? Orientation.Horizontal : Orientation.Vertical;
+        private void Orientation_Click(object sender, EventArgs e) => splitter.Orientation = splitter.Orientation == Orientation.Vertical ? Orientation.Horizontal : Orientation.Vertical;
 
         private void ToggleChecked(object sender)
         {

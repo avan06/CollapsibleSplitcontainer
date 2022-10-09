@@ -1,8 +1,8 @@
-﻿// Collapsible Split Container
+﻿// forked from https://www.codeproject.com/Articles/820888/Collapsible-Split-Container
+// Collapsible Split Container
 // (c) 2014 Ed Gadziemski, v. 1.0.0.2
 // Last updated 9/18/2014
 // Licensed under Code Project Open License
-// forked from https://www.codeproject.com/Articles/820888/Collapsible-Split-Container
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,7 +12,8 @@ using System.Windows.Forms;
 
 namespace SoftGee
 {
-    public enum ButtonStyle { None, Image };
+    public enum ButtonStyle { None, Image, SingleImage };
+    public enum ButtonLocation { Panel, Panel1, Panel2 };
     public enum ButtonPosition { TopLeft, Center, BottomRight };
     public enum CollapseDistance { MinSize, Collapsed };
 
@@ -27,9 +28,11 @@ namespace SoftGee
         private Bitmap splitterButtonBitmap = null, bitmapRight = null, bitmapUp = null, bitmapDown = null;
 
         // Property fields
-        private ButtonStyle      splitterButtonStyle        = ButtonStyle.Image;
-        private ButtonPosition   splitterButtonPosition     = ButtonPosition.TopLeft;
-        private CollapseDistance splitterCollapseDistance   = CollapseDistance.MinSize;
+        private int              splitterButtonSize;
+        private ButtonStyle      splitterButtonStyle;
+        private ButtonLocation   splitterButtonLocation;
+        private ButtonPosition   splitterButtonPosition;
+        private CollapseDistance splitterCollapseDistance;
 
         private Button splitterButton1;
         private Button splitterButton2;
@@ -61,10 +64,12 @@ namespace SoftGee
             splitterButton2.FlatAppearance.BorderSize = 0;
             splitterButton1.Click += SplitterButton1_Click;
             splitterButton2.Click += SplitterButton2_Click;
-            splitterButton1.BringToFront();
-            splitterButton2.BringToFront();
-            Panel1.Controls.Add(splitterButton1);
-            Panel2.Controls.Add(splitterButton2);
+
+            SplitterButtonSize = 16;
+            SplitterButtonStyle = ButtonStyle.Image;
+            SplitterButtonBitmap = Base64ToBitmap(TableFillLeft);
+            SplitterCollapseDistance = CollapseDistance.MinSize;
+            SplitterButtonLocation = ButtonLocation.Panel;
         }
 
         #region Properties
@@ -92,6 +97,47 @@ namespace SoftGee
 
                 Refresh();
                 UpdateSplitterButtonsImage();
+            }
+        }
+
+        [Category("Collapsible"), Description("Where the collapse buttons are located on the splitter")]
+        [DefaultValue(ButtonLocation.Panel)]
+        public ButtonLocation SplitterButtonLocation
+        {
+            get => splitterButtonLocation;
+            set
+            {
+                splitterButtonLocation = value;
+                if (splitterCollapseDistance == CollapseDistance.Collapsed || splitterButtonLocation == ButtonLocation.Panel)
+                {
+                    if (!Panel1.Controls.Contains(splitterButton1)) Panel1.Controls.Add(splitterButton1);
+                    if (!Panel2.Controls.Contains(splitterButton2)) Panel2.Controls.Add(splitterButton2);
+                    if (Panel2.Controls.Contains(splitterButton1)) Panel2.Controls.Remove(splitterButton1);
+                    if (Panel1.Controls.Contains(splitterButton2)) Panel1.Controls.Remove(splitterButton2);
+                }
+                else if(splitterButtonLocation == ButtonLocation.Panel1)
+                {
+                    if (!Panel1.Controls.Contains(splitterButton1)) Panel1.Controls.Add(splitterButton1);
+                    if (!Panel1.Controls.Contains(splitterButton2)) Panel1.Controls.Add(splitterButton2);
+                    if (Panel2.Controls.Contains(splitterButton1)) Panel2.Controls.Remove(splitterButton1);
+                    if (Panel2.Controls.Contains(splitterButton2)) Panel2.Controls.Remove(splitterButton2);
+                }
+                else if (splitterButtonLocation == ButtonLocation.Panel2)
+                {
+                    if (!Panel2.Controls.Contains(splitterButton1)) Panel2.Controls.Add(splitterButton1);
+                    if (!Panel2.Controls.Contains(splitterButton2)) Panel2.Controls.Add(splitterButton2);
+                    if (Panel1.Controls.Contains(splitterButton1)) Panel1.Controls.Remove(splitterButton1);
+                    if (Panel1.Controls.Contains(splitterButton2)) Panel1.Controls.Remove(splitterButton2);
+                }
+                else
+                {
+                    Panel1.Controls.Remove(splitterButton1);
+                    Panel1.Controls.Remove(splitterButton2);
+                    Panel2.Controls.Remove(splitterButton1);
+                    Panel2.Controls.Remove(splitterButton2);
+                }
+                Refresh();
+                UpdateSplitterButtonsPosition();
             }
         }
 
@@ -132,6 +178,24 @@ namespace SoftGee
             }
         }
 
+        [Category("Collapsible"), Description("Determines the splitter button size, the default is 16")]
+        [DefaultValue(16)]
+        public int SplitterButtonSize
+        {
+            get => splitterButtonSize;
+            set
+            {
+                if (splitterButtonSize == value) return;
+                splitterButtonSize = value;
+                var size = splitterButton1.Size;
+                size.Width = SplitterButtonSize;
+                size.Height = SplitterButtonSize;
+                splitterButton1.Size = size;
+                splitterButton2.Size = size;
+                Refresh();
+            }
+        }
+
         [Category("Collapsible"), Description("How completely the affected panel collapses")]
         [DefaultValue(CollapseDistance.MinSize)]
         public CollapseDistance SplitterCollapseDistance
@@ -168,6 +232,7 @@ namespace SoftGee
 
                     panel1Minimized = false;
                     panel2Minimized = false;
+                    SplitterButtonLocation = ButtonLocation.Panel;
                 }
 
                 splitterCollapseDistance = value;
@@ -188,9 +253,7 @@ namespace SoftGee
             }
         }
 
-        [Category("CatBehavior"), Description("SplitContainerOrientationDescr")]
-        [DefaultValue(Orientation.Vertical)]
-        [Localizable(true)]
+        // SplitContainerOrientationDescr
         public new Orientation Orientation
         {
             get => base.Orientation;
@@ -222,7 +285,11 @@ namespace SoftGee
             {
                 // If the panel for the clicked button is already minimized, do nothing
                 // Otherwise, have the panel shrink to or return from the minimum size
-                if (panel1Minimized) return;
+                if (panel1Minimized)
+                {
+                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton2.BringToFront();
+                    return;
+                }
                 else if (panel2Minimized) // Panel 2
                 {
                     SplitterDistance = splitterDistanceOriginal;
@@ -233,6 +300,7 @@ namespace SoftGee
                     splitterDistanceOriginal = SplitterDistance;
                     SplitterDistance = Panel1MinSize;
                     panel1Minimized = true;
+                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton2.BringToFront();
                 }
             }
             Refresh();
@@ -253,7 +321,11 @@ namespace SoftGee
             {
                 // If the panel for the clicked button is already minimized, do nothing
                 // Otherwise, have the panel shrink to or return from the minimum size
-                if (panel2Minimized) return;
+                if (panel2Minimized)
+                {
+                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton1.BringToFront();
+                    return;
+                }
                 else if (panel1Minimized) // Panel 1
                 {
                     SplitterDistance = splitterDistanceOriginal;
@@ -270,6 +342,7 @@ namespace SoftGee
                     else SplitterDistance = Height - Panel2MinSize;
 
                     panel2Minimized = true;
+                    if (splitterButtonStyle == ButtonStyle.SingleImage) splitterButton1.BringToFront();
                 }
             }
             Refresh();
@@ -300,15 +373,53 @@ namespace SoftGee
             int position = GetButtonPosition();
             if (Orientation == Orientation.Vertical)
             {
-                int width = splitterCollapseDistance == CollapseDistance.Collapsed ? 0 : Panel1Collapsed ? Panel2.ClientRectangle.Right - splitterButton2.Width : Panel1.ClientRectangle.Right - splitterButton1.Width;
-                splitterButton1.Location = new Point(width, position);
-                splitterButton2.Location = new Point(0, position);
+                int width = splitterCollapseDistance == CollapseDistance.Collapsed ? 0 : (Panel1Collapsed ? Panel2.ClientRectangle.Right - splitterButton2.Width : Panel1.ClientRectangle.Right - splitterButton1.Width);
+
+                if (splitterCollapseDistance == CollapseDistance.Collapsed || splitterButtonLocation == ButtonLocation.Panel)
+                {
+                    splitterButton1.Location = new Point(width, position);
+                    splitterButton2.Location = new Point(0, position);
+                }
+                else if(SplitterButtonLocation == ButtonLocation.Panel1)
+                {
+                    splitterButton1.Location = new Point(width, position);
+                    splitterButton2.Location = new Point(width, position + (splitterButtonStyle == ButtonStyle.SingleImage ? 0 : splitterButton1.Height));
+                }
+                else if(SplitterButtonLocation == ButtonLocation.Panel2)
+                {
+                    splitterButton1.Location = new Point(0, position);
+                    splitterButton2.Location = new Point(0, position + (splitterButtonStyle == ButtonStyle.SingleImage ? 0 : splitterButton1.Height));
+                }
             }
             else
             {
-                int height = splitterCollapseDistance == CollapseDistance.Collapsed ? 0 : Panel1Collapsed ? Panel2.ClientRectangle.Bottom - splitterButton2.Height : Panel1.ClientRectangle.Bottom - splitterButton1.Height;
-                splitterButton1.Location = new Point(position, height);
-                splitterButton2.Location = new Point(position, 0);
+                int height = splitterCollapseDistance == CollapseDistance.Collapsed ? 0 : (Panel1Collapsed ? Panel2.ClientRectangle.Bottom - splitterButton2.Height : Panel1.ClientRectangle.Bottom - splitterButton1.Height);
+
+                if (splitterCollapseDistance == CollapseDistance.Collapsed || splitterButtonLocation == ButtonLocation.Panel)
+                {
+                    splitterButton1.Location = new Point(position, height);
+                    splitterButton2.Location = new Point(position, 0);
+                }
+                else if (SplitterButtonLocation == ButtonLocation.Panel1)
+                {
+                    splitterButton1.Location = new Point(position, height);
+                    splitterButton2.Location = new Point(position + (splitterButtonStyle == ButtonStyle.SingleImage ? 0 : splitterButton1.Width), height);
+                }
+                else if (SplitterButtonLocation == ButtonLocation.Panel2)
+                {
+                    splitterButton1.Location = new Point(position, 0);
+                    splitterButton2.Location = new Point(position + (splitterButtonStyle == ButtonStyle.SingleImage ? 0 : splitterButton1.Width), 0);
+                }
+            }
+            if (splitterCollapseDistance == CollapseDistance.Collapsed || splitterButtonStyle == ButtonStyle.Image)
+            {
+                splitterButton1.BringToFront();
+                splitterButton2.BringToFront();
+            }
+            else if (SplitterButtonStyle == ButtonStyle.SingleImage)
+            {
+                if (panel2Minimized) splitterButton1.BringToFront();
+                else splitterButton2.BringToFront();
             }
         }
 
@@ -332,19 +443,20 @@ namespace SoftGee
         {
             int position;
 
+            int offset = (splitterButtonLocation == ButtonLocation.Panel || splitterButtonStyle == ButtonStyle.SingleImage) ? 0 : splitterButtonSize;
             Rectangle rect = Panel1Collapsed ? Panel2.ClientRectangle : Panel1.ClientRectangle;
 
             if (Orientation == Orientation.Vertical)
             {
                 position = rect.Top;
-                if (splitterButtonPosition == ButtonPosition.Center) position = rect.Bottom / 2 - splitterButton1.Height / 2;
-                else if (splitterButtonPosition == ButtonPosition.BottomRight) position = rect.Bottom - splitterButton1.Height;
+                if (splitterButtonPosition == ButtonPosition.Center) position = rect.Bottom / 2 - splitterButton1.Height / 2 - offset / 2;
+                else if (splitterButtonPosition == ButtonPosition.BottomRight) position = rect.Bottom - splitterButton1.Height - offset;
             }
             else
             {
                 position = rect.Left;
-                if (splitterButtonPosition == ButtonPosition.Center) position = rect.Right / 2 - splitterButton1.Width / 2;
-                else if (splitterButtonPosition == ButtonPosition.BottomRight) position = rect.Right - splitterButton1.Width;
+                if (splitterButtonPosition == ButtonPosition.Center) position = rect.Right / 2 - splitterButton1.Width / 2 - offset / 2;
+                else if (splitterButtonPosition == ButtonPosition.BottomRight) position = rect.Right - splitterButton1.Width - offset;
             }
             return position;
         }
