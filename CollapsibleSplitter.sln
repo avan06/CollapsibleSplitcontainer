@@ -1,12 +1,18 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{C8B6E27C-62E4-4E94-92FF-BBEADA773B6D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{311B53EF-7EDD-45DE-9119-F5F99831A906} = {311B53EF-7EDD-45DE-9119-F5F99831A906}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitterControl", "SplitterControl\SplitterControl.csproj", "{311B53EF-7EDD-45DE-9119-F5F99831A906}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{170B8500-FBDE-457E-96EE-06C9463A8815}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +31,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7D0F3BF-A54E-4FAA-A9D5-C4ACB067C3DB}
 	EndGlobalSection
 EndGlobal

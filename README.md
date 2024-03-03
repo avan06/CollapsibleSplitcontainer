@@ -30,6 +30,7 @@ ___
 
 ## SplitterButtonLocation
 
+- Determines whether to place collapse buttons on both sides of the splitter or on one side of Panel1 and Panel2
 - Panel: The location of the splitter button is on both sides of the panel  
 - Panel1: The location of the splitter button is in Panel1  
 - Panel2: The location of the splitter button is in Panel2  
@@ -42,6 +43,7 @@ ___
 
 ## SplitterButtonStyle
 
+- Determines the style of splitter buttons
 - None: don't show the splitter button  
 - Image: Display the double splitter button (the button function is to determine the collapse direction of the panel, upper left or lower right)  
 - SingleImage: Displays a single splitter button (according to the collapsed state of the panel, the button automatically determines whether it is upper left or lower right)  
@@ -52,9 +54,10 @@ ___
 
 ## SplitterCollapseDistance
 
-- MinSize: MinSize: the panel collapses to the specified MinSize
+- Determines the style of the splitter after collapsing: MinSize - maintains minimum width; Collapsed - fully collapses
+- MinSize: the panel collapses to the specified MinSize
 - Collapsed: One-sided panel completely collapsed
 
 ## SingleImageCollapsePanel2
 
-- Determines whether to collapse Panel2 when SplitterButtonStyle is SingleImage, otherwise Panel1 collapse
+- Determines whether to collapse Panel2; if not, Panel1 will collapse. This setting only takes effect when SplitterButtonStyle is SingleImage and the location of the splitter button is on either Panel1 or Panel2.
