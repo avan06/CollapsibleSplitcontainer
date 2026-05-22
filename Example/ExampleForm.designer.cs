@@ -1,33 +1,33 @@
-﻿namespace Example
+﻿namespace SplitterExample
 {
-	partial class ExampleForm
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class ExampleForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExampleForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +48,7 @@
             this.collapsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitter = new SoftGee.CollapsibleSplitContainer();
+            this.splitter = new Splitter.CollapsibleSplitContainer();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -290,22 +290,22 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem positionToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem topLeftToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem centerToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem bottomRightToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem distanceToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem collapsedToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem minSizeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem orientationToolStripMenuItem;
-		private SoftGee.CollapsibleSplitContainer splitter;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem positionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topLeftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem centerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bottomRightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem distanceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem collapsedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem minSizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem orientationToolStripMenuItem;
+        private Splitter.CollapsibleSplitContainer splitter;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem styleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;

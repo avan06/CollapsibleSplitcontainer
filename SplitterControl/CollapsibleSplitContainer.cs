@@ -10,14 +10,14 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace SoftGee
+namespace Splitter
 {
     public enum ButtonStyle { None, Image, SingleImage };
     public enum ButtonLocation { Panel, Panel1, Panel2 };
     public enum ButtonPosition { TopLeft, Center, BottomRight };
     public enum CollapseDistance { MinSize, Collapsed };
 
-    public class CollapsibleSplitContainer : SplitContainer, ISupportInitialize
+    public class CollapsibleSplitContainer : System.Windows.Forms.SplitContainer, ISupportInitialize
     {
         #region Variables
         private int splitterDistanceOriginal = 0;
@@ -39,7 +39,7 @@ namespace SoftGee
 
         public CollapsibleSplitContainer()
         {
-            // Bug fix for SplitContainer problems with flickering and resizing
+            // Bug fix for Splitter problems with flickering and resizing
             ControlStyles cs = ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer;
             SetStyle(cs, true);
             object[] objArgs = new object[] { cs, true };
@@ -254,6 +254,7 @@ namespace SoftGee
         public bool Panel2Minimized { get; private set; } = false;
 
         // Forces designer to refresh and reflect changes to the property
+        [DefaultValue(false)]
         public new bool IsSplitterFixed
         {
             get => base.IsSplitterFixed;
@@ -266,6 +267,7 @@ namespace SoftGee
         }
 
         // SplitContainerOrientationDescr
+        [DefaultValue(Orientation.Vertical)]
         public new Orientation Orientation
         {
             get => base.Orientation;

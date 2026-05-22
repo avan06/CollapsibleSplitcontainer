@@ -1,9 +1,9 @@
 ﻿// Demo application for CollapsibleSplitContainer
 using System;
 using System.Windows.Forms;
-using SoftGee;
+using Splitter;
 
-namespace Example
+namespace SplitterExample
 {
     public partial class ExampleForm : Form
     {
